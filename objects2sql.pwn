@@ -4,6 +4,7 @@
 			((!(%1[0])) || (((%1[0]) == '\1') && (!(%1[1]))))
 #define isNull isnull
 #define IsNull isNull
+			
 #include <a_samp>
 #include <sscanf2>
 new SQL_Connection;
