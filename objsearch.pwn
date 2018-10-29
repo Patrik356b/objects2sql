@@ -49,7 +49,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	{
 		case DIALOG_OBJECT_MENU:
 		{
-		    if(response != 1)
+			if(response != 1)
 			{
 				HidePlayerDialog(playerid);
 				return 1;
@@ -64,13 +64,13 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				SetPVarInt(playerid,"Obj_Page",page_id);
 				GetPVarString(playerid,"ObjSearch", Obj_Search, sizeof(Obj_Search));
 				new Obj_list=GetPVarInt(playerid,"ObjList");
-			    switch(Obj_list)
-			    {
-			        case 1..7:
-			        {
-			            switch(Obj_list)
-			            {
-			                case 1: format(oQuery,sizeof(oQuery), "SELECT * FROM objects WHERE Model LIKE '%%%s%%' LIMIT %i, 21", Obj_Search, page_id*20);
+				switch(Obj_list)
+				{
+					case 1..7:
+					{
+						switch(Obj_list)
+						{
+							case 1: format(oQuery,sizeof(oQuery), "SELECT * FROM objects WHERE Model LIKE '%%%s%%' LIMIT %i, 21", Obj_Search, page_id*20);
 							case 2: format(oQuery,sizeof(oQuery), "SELECT * FROM objects WHERE Name LIKE '%%%s%%' LIMIT %i, 21", Obj_Search, page_id*20);
 							case 3: format(oQuery,sizeof(oQuery), "SELECT * FROM objects WHERE Comment LIKE '%%%s%%' LIMIT %i, 21", Obj_Search, page_id*20);
 							case 4: format(oQuery,sizeof(oQuery), "SELECT * FROM objects WHERE Category LIKE '%%%s%%' LIMIT %i, 21", Obj_Search, page_id*20);
@@ -83,11 +83,11 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						mysql_function_query(SQL_Connection, oQuery, true, "ObjectMenu", "ii", playerid, page_id);
 					}
-			        default:
-			        {
-			        	SendClientMessage(playerid, COLOR_ERROR, "Object Search System Error: PVar \"ObjList\" was not correctly set!");
-				    	return 1;
-				    }
+					default:
+					{
+						SendClientMessage(playerid, COLOR_ERROR, "Object Search System Error: PVar \"ObjList\" was not correctly set!");
+						return 1;
+					}
 				}
 				mysql_function_query(SQL_Connection, oQuery, true, "ObjectMenu", "ii", playerid, page_id);
 			}
@@ -97,19 +97,19 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				page_id--;
 				SetPVarInt(playerid,"Obj_Page",page_id);
 				GetPVarString(playerid,"ObjSearch", Obj_Search, sizeof(Obj_Search));
-	    		new Obj_list=GetPVarInt(playerid,"ObjList");
-			    switch(Obj_list)
-			    {
-			        case 1..7:
-			        {
-			            if(page_id*20 < 0)
-			            {
-			                SendClientMessage(playerid, COLOR_ERROR, "<!> Reached an invalid page.");
-				    		return 1;
+				new Obj_list=GetPVarInt(playerid,"ObjList");
+				switch(Obj_list)
+				{
+					case 1..7:
+					{
+						if(page_id*20 < 0)
+						{
+							SendClientMessage(playerid, COLOR_ERROR, "<!> Reached an invalid page.");
+							return 1;
 						}
-			            switch(Obj_list)
-			            {
-			                case 1: format(oQuery,sizeof(oQuery), "SELECT * FROM objects WHERE Model LIKE '%%%s%%' LIMIT %i, 21", Obj_Search, page_id*20);
+						switch(Obj_list)
+						{
+							case 1: format(oQuery,sizeof(oQuery), "SELECT * FROM objects WHERE Model LIKE '%%%s%%' LIMIT %i, 21", Obj_Search, page_id*20);
 							case 2: format(oQuery,sizeof(oQuery), "SELECT * FROM objects WHERE Name LIKE '%%%s%%' LIMIT %i, 21", Obj_Search, page_id*20);
 							case 3: format(oQuery,sizeof(oQuery), "SELECT * FROM objects WHERE Comment LIKE '%%%s%%' LIMIT %i, 21", Obj_Search, page_id*20);
 							case 4: format(oQuery,sizeof(oQuery), "SELECT * FROM objects WHERE Category LIKE '%%%s%%' LIMIT %i, 21", Obj_Search, page_id*20);
@@ -122,31 +122,31 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						mysql_function_query(SQL_Connection, oQuery, true, "ObjectMenu", "ii", playerid, page_id);
 					}
-			        default:
-			        {
-			        	SendClientMessage(playerid, COLOR_ERROR, "Object Search System Error: PVar \"ObjList\" was not correctly set!");
-				    	return 1;
-				    }
+					default:
+					{
+						SendClientMessage(playerid, COLOR_ERROR, "Object Search System Error: PVar \"ObjList\" was not correctly set!");
+						return 1;
+					}
 				}
 				mysql_function_query(SQL_Connection, oQuery, true, "ObjectMenu", "ii", playerid, page_id);
 			}
 			else
 			{
-			    new pVarOL[24];
+				new pVarOL[24];
 				format(pVarOL, sizeof(pVarOL), "ObjectList[%i]", listitem); // Store ObjectID's
-			    format(oQuery,sizeof(oQuery), "SELECT * FROM objects WHERE Model = %i", GetPVarInt(playerid, pVarOL));
-			    mysql_function_query(SQL_Connection, oQuery, true, "ObjectDetails", "i", playerid);
+				format(oQuery,sizeof(oQuery), "SELECT * FROM objects WHERE Model = %i", GetPVarInt(playerid, pVarOL));
+				mysql_function_query(SQL_Connection, oQuery, true, "ObjectDetails", "i", playerid);
 			}
 			HidePlayerDialog(playerid);
 		}
 		case DIALOG_OBJECT_DETAILS, DIALOG_OBJECT_SYSTEM:
 		{
-		    HidePlayerDialog(playerid);
+			HidePlayerDialog(playerid);
 		}
 		//==============================================================================
 		default:
 		{
-		    printf("Player %s <%i> Tried to use an unknown dialogid of %i !\nlistitem = %i response: %i inputtext:", pName[playerid], playerid, dialogid, listitem, response);
+			printf("Player %s <%i> Tried to use an unknown dialogid of %i !\nlistitem = %i response: %i inputtext:", pName[playerid], playerid, dialogid, listitem, response);
 			printf(inputtext); return printf("\n");
 		}
 	}
@@ -166,14 +166,14 @@ public OnQueryError(errorid, error[], callback[], query[], connectionHandle)
 
 CMD:obj(playerid, params[])
 {
-    DeletePVar(playerid,"ObjList");
-    DeletePVar(playerid,"Obj_Page");
+	DeletePVar(playerid,"ObjList");
+	DeletePVar(playerid,"Obj_Page");
 	DeletePVar(playerid,"ObjSearch");
 	new Obj_list, inputtext[128];
 	if(sscanf(params, "p< >ip<|>s[127]", Obj_list, inputtext))
 	{
-        ShowPlayerDialog(playerid, DIALOG_OBJECT_SYSTEM, DIALOG_STYLE_MSGBOX, "Object Search", "{FFFF00}Usage: {FFFFFF}/obj {00FFFF}<type> {FF7700}<search term>\n{00FFFF}\nTypes of search:\n{FFFFFF}1 = ModelID\t(Numeric)\n2 = Name\t(String)\n3 = Comment\t(String)\n4 = Category\t(String)\n5 = MTA\t(String)\n6 = IDE\t\t(String)\n{FFFF00}7 = Match ANY Feild.", "Close", "");
-	    return 1;
+		ShowPlayerDialog(playerid, DIALOG_OBJECT_SYSTEM, DIALOG_STYLE_MSGBOX, "Object Search", "{FFFF00}Usage: {FFFFFF}/obj {00FFFF}<type> {FF7700}<search term>\n{00FFFF}\nTypes of search:\n{FFFFFF}1 = ModelID\t(Numeric)\n2 = Name\t(String)\n3 = Comment\t(String)\n4 = Category\t(String)\n5 = MTA\t(String)\n6 = IDE\t\t(String)\n{FFFF00}7 = Match ANY Feild.", "Close", "");
+		return 1;
 	}
 	SetPVarInt(playerid,"ObjList", Obj_list);
 	// Minimum string is 3 chars
@@ -185,19 +185,19 @@ CMD:obj(playerid, params[])
 	}
 	if(inputtext[32] != '\0' && inputtext[32] != '\1') // 32 Chars = Maximum length
 	{
-	    SendClientMessage(playerid, COLOR_ERROR, "Error: The specifed <search term> was too long!");
-	    return 1;
+		SendClientMessage(playerid, COLOR_ERROR, "Error: The specifed <search term> was too long!");
+		return 1;
 	}
 	SetPVarString(playerid,"ObjSearch",inputtext);
 
-    switch(Obj_list)
-    {
-        case 1..7:
-        {
-            new oQuery[460];
-            switch(Obj_list)
-            {
-                case 1: format(oQuery,sizeof(oQuery), "SELECT * FROM objects WHERE Model LIKE '%%%s%%' LIMIT 0, 21", inputtext);
+	switch(Obj_list)
+	{
+		case 1..7:
+		{
+			new oQuery[460];
+			switch(Obj_list)
+			{
+				case 1: format(oQuery,sizeof(oQuery), "SELECT * FROM objects WHERE Model LIKE '%%%s%%' LIMIT 0, 21", inputtext);
 				case 2: format(oQuery,sizeof(oQuery), "SELECT * FROM objects WHERE Name LIKE '%%%s%%' LIMIT 0, 21", inputtext);
 				case 3: format(oQuery,sizeof(oQuery), "SELECT * FROM objects WHERE Comment LIKE '%%%s%%' LIMIT 0, 21", inputtext);
 				case 4: format(oQuery,sizeof(oQuery), "SELECT * FROM objects WHERE Category LIKE '%%%s%%' LIMIT 0, 21", inputtext);
@@ -210,7 +210,7 @@ CMD:obj(playerid, params[])
 			}
 			mysql_function_query(SQL_Connection, oQuery, true, "ObjectMenu", "ii", playerid, 0);
 		}
-        default: SendClientMessage(playerid, COLOR_ERROR, "Object Search System Error: PVar \"ObjList\" was not correctly set!");
+		default: SendClientMessage(playerid, COLOR_ERROR, "Object Search System Error: PVar \"ObjList\" was not correctly set!");
 	}
 	return 1;
 }
@@ -220,19 +220,19 @@ public ObjectMenu(playerid, page_id)
 {
 	printf("\tGenerating Object List for Player: %s (%i)\n\t\tPageID: %i", pName[playerid], playerid, page_id);
 	new result[64];
-    new rows, fields;
-    cache_get_data(rows, fields);
-    if(rows < 1)
+	new rows, fields;
+	cache_get_data(rows, fields);
+	if(rows < 1)
 	{
 		SendClientMessage(playerid, COLOR_ERROR, ">> No objects found!");
 		return 1;
 	}
 	new Obj_dialog[2500], Object_Counter=0;
 	for(new obj_count = 0; obj_count != rows+1; obj_count++)
-    {
-    	if(fields)
+	{
+		if(fields)
 		{
-		    cache_get_row(obj_count, 0, result);
+			cache_get_row(obj_count, 0, result);
 
 			if(obj_count == 20 && rows >= obj_count)
 			{
@@ -246,10 +246,10 @@ public ObjectMenu(playerid, page_id)
 				format(pVarOL, sizeof(pVarOL), "ObjectList[%i]", obj_count); // Store ObjectID's
 				SetPVarInt(playerid, pVarOL, strval(result));
 				
-	            if(obj_count < rows && obj_count != 0 && obj_count < 21)
-	            {
-	            	strcat(Obj_dialog, "\n{FFFFFF}");
-	            }
+				if(obj_count < rows && obj_count != 0 && obj_count < 21)
+				{
+					strcat(Obj_dialog, "\n{FFFFFF}");
+				}
 				strcat(Obj_dialog, result); // Modelid
 
 				cache_get_row(obj_count, 1, result);
@@ -275,15 +275,15 @@ forward ObjectDetails(playerid);
 public ObjectDetails(playerid)
 {
 	new result[64];
-    new rows, fields;
-    cache_get_data(rows, fields);
-    if(rows < 1) return SendClientMessage(playerid, COLOR_ERROR, ">> Object not found!");
+	new rows, fields;
+	cache_get_data(rows, fields);
+	if(rows < 1) return SendClientMessage(playerid, COLOR_ERROR, ">> Object not found!");
 	new Obj_dialog[512];
 
 	if(fields)
 	{
 		cache_get_row(0, 0, result);
-        strcat(Obj_dialog, "Model ID: ");
+		strcat(Obj_dialog, "Model ID: ");
 		strcat(Obj_dialog, result); // Modelid
 
 		cache_get_row(0, 1, result);
